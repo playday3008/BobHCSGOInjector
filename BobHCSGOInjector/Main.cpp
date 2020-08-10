@@ -17,9 +17,8 @@ DWORD GetGamePID() {
 
 std::string Lpcwstr2String(LPCWSTR lps) {
 	int len = WideCharToMultiByte(CP_ACP, 0, lps, -1, NULL, 0, NULL, NULL);
-	if (len <= 0) {
+	if (len <= 0)
 		return "";
-	}
 	else {
 		char* dest = new char[len];
 		WideCharToMultiByte(CP_ACP, 0, lps, -1, dest, len, NULL, NULL);
@@ -37,10 +36,7 @@ std::string SelectDll() {
 	ofn.hwndOwner = NULL;
 	ofn.lpstrFile = (LPWSTR)szFile;
 	ofn.lpstrFile[0] = '\0';
-	LPTSTR        lpstrCustomFilter;
-	DWORD         nMaxCustFilter;
 	ofn.nFilterIndex = 1;
-	LPTSTR        lpstrFile;
 	ofn.nMaxFile = sizeof(szFile);
 	ofn.lpstrFilter = L"DLL File\0*.dll";
 	ofn.lpstrFileTitle = NULL;
@@ -52,9 +48,8 @@ std::string SelectDll() {
 		path_image = Lpcwstr2String(ofn.lpstrFile);
 		return path_image;
 	}
-	else {
+	else
 		return "";
-	}
 }
 void InjectDll(const char* path,DWORD pid) {
 	HANDLE hGame = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_QUERY_INFORMATION | PROCESS_VM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION, FALSE, pid);
